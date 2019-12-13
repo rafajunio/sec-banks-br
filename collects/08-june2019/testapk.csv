@@ -1,0 +1,7 @@
+Bank                    , Common MITM , MITM with root certificate , Leak Credential , Leak Financial Information , Extern Social network , Use Pinning
+Banco do Brasil         , no          , no                         , no              , no                         , yes                   , yes
+Bradesco                , no          , no                         , no              , no                         , no                    , yes
+Caixa Econômica Federal , no          , no                         , no              , no                         , no                    , yes
+Itaú Unibanco           , no          , no                         , no              , no                         , yes                   , yes
+Nubank                  , no          , no                         , no              , no                         , yes                   , yes
+Santander               , no          , no                         , no              , no                         , yes                   , yes

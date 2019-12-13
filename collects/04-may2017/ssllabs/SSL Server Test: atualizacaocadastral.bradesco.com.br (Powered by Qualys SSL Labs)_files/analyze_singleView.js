@@ -1,0 +1,142 @@
+// Function to show the contents
+function hide(c) {
+
+    var hideEl = document.getElementById("hide"+c);
+    var showEl = document.getElementById("show"+c);
+    var expandEl = document.getElementById("expand"+c);
+
+	if(!hideEl || !showEl) {
+	    return;
+	}
+
+	hideEl.style.display = "none";
+	showEl.style.display = "block";
+
+	var el = document.getElementsByClassName(c+"Block");
+	for (var i = 0; i < el.length; i++){
+        el[i].style.display = "none";
+    }
+
+	if (c != "" && c != "http" && expandEl) {
+		expandEl.style.display = "block";
+	}
+}
+
+// Function to hide the content
+function show(c) {
+
+    var hideEl = document.getElementById("hide"+c);
+    var showEl = document.getElementById("show"+c);
+    var expandEl = document.getElementById("expand"+c);
+
+    if(!hideEl || !showEl) {
+        return;
+    }
+
+	hideEl.style.display = "block";
+	showEl.style.display = "none";
+
+	var el = document.getElementsByClassName(c+"Block");
+	for (var i = 0; i < el.length; i++){
+        el[i].style.display = "";
+    }
+
+	if (c != "" && c != "http" && expandEl) {
+		expandEl.style.display = "none";
+	}
+}
+
+// Binds show/hide buttons
+var chainCount = document.getElementById("chainCount").value;
+for (var i = 1; i <= chainCount; i++) {
+
+    // Binds Certification Paths buttons
+    var hideCert = document.getElementById('hidecert'+i);
+    var showCert = document.getElementById('showcert'+i);
+    var expandCert = document.getElementById('expandcert'+i);
+    if(hideCert && showCert && expandCert ) {
+            hideCert.onclick = function() {
+                hide(this.getAttribute("cert"));
+            }
+
+            showCert.onclick = function() {
+                show(this.getAttribute("cert"));
+            }
+
+            expandCert.onclick = function() {
+                show(this.getAttribute("cert"));
+            }
+    }
+
+    // Bind buttons to Server Certifcate section
+    var hideChain = document.getElementById('hidechain'+i);
+    var showChain = document.getElementById('showchain'+i);
+    var expandChain = document.getElementById('expandchain'+i);
+
+    if (document.getElementById('hidechain'+i) && document.getElementById('showchain'+i) && document.getElementById('expandchain'+i)) {
+        document.getElementById('hidechain'+i).onclick = function() {
+            hide(this.getAttribute("cert"));
+        }
+
+        document.getElementById('showchain'+i).onclick = function() {
+            show(this.getAttribute("cert"));
+        }
+
+        document.getElementById('expandchain'+i).onclick = function() {
+            show(this.getAttribute("cert"));
+        }
+    }
+
+    // Hide on initial load
+    hide('cert'+i);
+    hide('chain'+i);
+}
+
+//Bind buttons to cipher suites block section
+var protocolCount = document.getElementById("protocolCount");
+var identicalSuites = document.getElementById("identicalSuites");
+var noSniSuites = document.getElementById("noSniSuites");
+if (protocolCount && identicalSuites && noSniSuites) {
+    protocolCount = protocolCount.value;
+    identicalSuites = identicalSuites.value;
+    noSniSuites = noSniSuites.value;
+    for (var i = 1; i <= protocolCount; i++) {
+
+        var hideCipher = document.getElementById('hidecipher'+i);
+        var showCipher = document.getElementById('showcipher'+i);
+
+        if(hideCipher && showCipher) {
+            hideCipher.onclick = function() {
+                hide(this.getAttribute("cipher"));
+            }
+
+            showCipher.onclick = function() {
+                show(this.getAttribute("cipher"));
+            }
+        }
+
+        // Hide suites if suites exists observed in highest supported protocol suites
+        // And always hide no sni suites
+        if (protocolCount > 1 && i > 1 && identicalSuites === "true") {
+                hide('cipher'+i);
+        } else if (noSniSuites == "true" && i == protocolCount) {
+                hide('cipher'+i);
+        }
+    }
+}
+
+// Bind onclick to Http block buttons
+var hidehttp = document.getElementById('hidehttp');
+var showhttp = document.getElementById('showhttp');
+if (hidehttp && showhttp) {
+    hidehttp.onclick = function() {
+        hide("http");
+    }
+
+    showhttp.onclick = function() {
+        show("http");
+    }
+}
+
+// Hide http section on initial load
+hide('http');
